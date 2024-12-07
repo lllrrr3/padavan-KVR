@@ -40,6 +40,11 @@ jobs:
         sed -i 's/size_etc="6M"/size_etc="18M"/g' /opt/rt-n56u/trunk/user/scripts/dev_init.sh
         sed -i 's/size_tmp="24M"/size_tmp="120M"/g' /opt/rt-n56u/trunk/user/scripts/dev_init.sh
         sed -i 's/mtd_part_size=65536/mtd_part_size=18874368/g' /opt/rt-n56u/trunk/user/scripts/mtd_storage.sh
+        sed -i 's/Padavan-KVR/KVR/g' /opt/rt-n56u/trunk/user/www/Makefile
+        sed -i '286,288d' /opt/trunk/user/www/n56u_ribbon_fixed/Advanced_smartdns.asp
+        sed -i '455,456d' /opt/trunk/user/www/n56u_ribbon_fixed/Advanced_vnt.asp
+        sed -i '204,205d' /opt/trunk/user/www/n56u_ribbon_fixed/Advanced_vnts.asp
+        #sed -i '286,288d' /opt/trunk/user/www/n56u_ribbon_fixed/Advanced_zerotier.asp
     - name: Build Firmware
       env:
         TNAME: XY-C1
@@ -388,7 +393,7 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_WIREGUARD=n" >> .config  ## wireguard 约1M
         echo "CONFIG_FIRMWARE_INCLUDE_TUNSAFE=n" >> .config ## tunsafe（wireguard的TCP方式）
         echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config ## zerotier 约 20k
-        echo "CONFIG_FIRMWARE_INCLUDE_ALIDDNS=y" >> .config #阿里DDNS ~20k
+        echo "CONFIG_FIRMWARE_INCLUDE_ALIDDNS=n" >> .config #阿里DDNS ~20k
         echo "CONFIG_FIRMWARE_INCLUDE_DDNSTO=n" >> .config #ddnsto 约800k  已删除 /trunk/user/httpd/common.h
         echo "CONFIG_FIRMWARE_INCLUDE_TAILSCALE=n" >> .config #tailscale 约20k
         echo "CONFIG_FIRMWARE_INCLUDE_NATPIERCE=n" >> .config #皎月连 约20k
