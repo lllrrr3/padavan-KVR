@@ -43,7 +43,7 @@ jobs:
         sed -i 's/Padavan-KVR/KVR/g' /opt/rt-n56u/trunk/user/www/Makefile
         sed -i '144,146d' /opt/rt-n56u/trunk/user/www/n56u_ribbon_fixed/Advanced_frp.asp
         sed -i '286,288d' /opt/rt-n56u/trunk/user/www/n56u_ribbon_fixed/Advanced_smartdns.asp
-        sed -i '455,456d' /opt/rt-n56u/trunk/user/www/n56u_ribbon_fixed/Advanced_vnt.asp
+        sed -i '454,456d' /opt/rt-n56u/trunk/user/www/n56u_ribbon_fixed/Advanced_vnt.asp
         sed -i '204,205d' /opt/rt-n56u/trunk/user/www/n56u_ribbon_fixed/Advanced_vnts.asp
         sed -i '240,241d' /opt/rt-n56u/trunk/user/www/n56u_ribbon_fixed/Advanced_zerotier.asp
     - name: Build Firmware
