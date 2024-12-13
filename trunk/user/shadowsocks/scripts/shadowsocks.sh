@@ -61,19 +61,23 @@ find_bin() {
 		if [ ! -f "$ret" ]; then
 			echo "$(date "+%Y-%m-%d %H:%M:%S") : 未找到v2ray 开始在线下载... " >>/tmp/ssrplus.log
 			for proxy in $github_proxys ; do
-				curl -L -k -s -o "/tmp/v2ray" --connect-timeout 10 --retry 3 "${proxy}https://github.com/lmq8267/padavan-KVR/raw/refs/heads/main/trunk/user/v2ray/v2ray" || wget --no-check-certificate -q -O "/tmp/v2ray" "${proxy}https://github.com/lmq8267/padavan-KVR/raw/refs/heads/main/trunk/user/v2ray/v2ray"
+   				length=$(wget --no-check-certificate -T 5 -t 3 "${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/v2ray/v2ray" -O /dev/null --spider --server-response 2>&1 | grep "[Cc]ontent-[Ll]ength" | grep -Eo '[0-9]+' | tail -n 1)
+ 				length=`expr $length + 512000`
+				length=`expr $length / 1048576`
+ 				[ ! -z "$length" ] && echo "$(date "+%Y-%m-%d %H:%M:%S") :程序大小 ${length}M"
+				curl -L -k -s -o "/tmp/v2ray" --connect-timeout 10 --retry 3 "${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/v2ray/v2ray" || wget --no-check-certificate -q -O "/tmp/v2ray" "${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/v2ray/v2ray"
 				if [ "$?" = 0 ] ; then
 					chmod +x /tmp/v2ray
-					if [ $(($(/tmp/v2ray -h | wc -l))) -gt 3 ] ; then
+					if [ "$(($(/tmp/v2ray -h 2>&1 | wc -l)))" -gt 3 ] ; then
 						echo "$(date "+%Y-%m-%d %H:%M:%S") : /tmp/v2ray 下载成功" >>/tmp/ssrplus.log
 						ret=/tmp/v2ray
 						break
        				else
-	   					echo "$(date "+%Y-%m-%d %H:%M:%S") : 下载不完整，删除...请手动下载 ${proxy}https://github.com/lmq8267/padavan-KVR/raw/refs/heads/main/trunk/user/v2ray/v2ray 上传到  ${etcvbin} 或 ${tmpvbin}" >>/tmp/ssrplus.log
+	   					echo "$(date "+%Y-%m-%d %H:%M:%S") : 下载不完整，删除...请手动下载 ${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/v2ray/v2ray 上传到  ${etcvbin} 或 ${tmpvbin}" >>/tmp/ssrplus.log
 						rm -f /tmp/v2ray
 	  				fi
 				else
-					echo "$(date "+%Y-%m-%d %H:%M:%S") : 下载失败${proxy}https://github.com/lmq8267/padavan-KVR/raw/refs/heads/main/trunk/user/v2ray/v2ray" >>/tmp/ssrplus.log
+					echo "$(date "+%Y-%m-%d %H:%M:%S") : 下载失败${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/v2ray/v2ray" >>/tmp/ssrplus.log
    				fi
 		
 			done
@@ -98,19 +102,23 @@ find_bin() {
 		if [ ! -f "$ret" ]; then
 			echo "$(date "+%Y-%m-%d %H:%M:%S") : 未找到xray 开始在线下载... " >>/tmp/ssrplus.log
 			for proxy in $github_proxys ; do
-				curl -L -k -s -o "/tmp/xray" --connect-timeout 10 --retry 3 "${proxy}https://github.com/lmq8267/padavan-KVR/raw/refs/heads/main/trunk/user/xray/xray" || wget --no-check-certificate -q -O "/tmp/xray" "${proxy}https://github.com/lmq8267/padavan-KVR/raw/refs/heads/main/trunk/user/xray/xray"
+   				length=$(wget --no-check-certificate -T 5 -t 3 "${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/xray/xray" -O /dev/null --spider --server-response 2>&1 | grep "[Cc]ontent-[Ll]ength" | grep -Eo '[0-9]+' | tail -n 1)
+ 				length=`expr $length + 512000`
+				length=`expr $length / 1048576`
+ 				[ ! -z "$length" ] && echo "$(date "+%Y-%m-%d %H:%M:%S") :程序大小 ${length}M"
+				curl -L -k -s -o "/tmp/xray" --connect-timeout 10 --retry 3 "${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/xray/xray" || wget --no-check-certificate -q -O "/tmp/xray" "${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/xray/xray"
 				if [ "$?" = 0 ] ; then
 					chmod +x /tmp/xray
-					if [ $(($(/tmp/xray -h | wc -l))) -gt 3 ] ; then
+					if [ "$(($(/tmp/xray -h 2>&1 | wc -l)))" -gt 3 ] ; then
 						echo "$(date "+%Y-%m-%d %H:%M:%S") : /tmp/xray 下载成功" >>/tmp/ssrplus.log
 						ret=/tmp/xray
 						break
        				else
-	   					echo "$(date "+%Y-%m-%d %H:%M:%S") : 下载不完整，删除...请手动下载 ${proxy}https://github.com/lmq8267/padavan-KVR/raw/refs/heads/main/trunk/user/xray/xray 上传到  ${etcxbin} 或 ${tmpxbin}" >>/tmp/ssrplus.log
+	   					echo "$(date "+%Y-%m-%d %H:%M:%S") : 下载不完整，删除...请手动下载 ${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/xray/xray 上传到  ${etcxbin} 或 ${tmpxbin}" >>/tmp/ssrplus.log
 						rm -f /tmp/xray
 	  				fi
 				else
-					echo "$(date "+%Y-%m-%d %H:%M:%S") : 下载失败${proxy}https://github.com/lmq8267/padavan-KVR/raw/refs/heads/main/trunk/user/xray/xray" >>/tmp/ssrplus.log
+					echo "$(date "+%Y-%m-%d %H:%M:%S") : 下载失败${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/xray/xray" >>/tmp/ssrplus.log
    				fi
 		
 			done
@@ -126,19 +134,23 @@ find_bin() {
 		if [ ! -f "$ret" ]; then
 			echo "$(date "+%Y-%m-%d %H:%M:%S") : 未找到trojan 开始在线下载... " >>/tmp/ssrplus.log
 			for proxy in $github_proxys ; do
-				curl -L -k -s -o "/tmp/trojan" --connect-timeout 10 --retry 3 "${proxy}https://github.com/lmq8267/padavan-KVR/raw/refs/heads/main/trunk/user/trojan/trojan" || wget --no-check-certificate -q -O "/tmp/trojan" "${proxy}https://github.com/lmq8267/padavan-KVR/raw/refs/heads/main/trunk/user/trojan/trojan"
+   				length=$(wget --no-check-certificate -T 5 -t 3 "${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/trojan/trojan" -O /dev/null --spider --server-response 2>&1 | grep "[Cc]ontent-[Ll]ength" | grep -Eo '[0-9]+' | tail -n 1)
+ 				length=`expr $length + 512000`
+				length=`expr $length / 1048576`
+ 				[ ! -z "$length" ] && echo "$(date "+%Y-%m-%d %H:%M:%S") :程序大小 ${length}M"
+				curl -L -k -s -o "/tmp/trojan" --connect-timeout 10 --retry 3 "${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/trojan/trojan" || wget --no-check-certificate -q -O "/tmp/trojan" "${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/trojan/trojan"
 				if [ "$?" = 0 ] ; then
 					chmod +x /tmp/trojan
-					if [ $(($(/tmp/trojan -h | wc -l))) -gt 3 ] ; then
+					if [ "$(($(/tmp/trojan -h 2>&1 | wc -l)))" -gt 3 ] ; then
 						echo "$(date "+%Y-%m-%d %H:%M:%S") : /tmp/trojan 下载成功" >>/tmp/ssrplus.log
 						ret=/tmp/trojan
 						break
        				else
-	   					echo "$(date "+%Y-%m-%d %H:%M:%S") : 下载不完整，删除...请手动下载 ${proxy}https://github.com/lmq8267/padavan-KVR/raw/refs/heads/main/trunk/user/trojan/trojan 上传到  ${etcbin} 或 ${tmpbin}" >>/tmp/ssrplus.log
+	   					echo "$(date "+%Y-%m-%d %H:%M:%S") : 下载不完整，删除...请手动下载 ${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/trojan/trojan 上传到  ${etcbin} 或 ${tmpbin}" >>/tmp/ssrplus.log
 						rm -f /tmp/trojan
 	  				fi
 				else
-					echo "$(date "+%Y-%m-%d %H:%M:%S") : 下载失败${proxy}https://github.com/lmq8267/padavan-KVR/raw/refs/heads/main/trunk/user/trojan/trojan" >>/tmp/ssrplus.log
+					echo "$(date "+%Y-%m-%d %H:%M:%S") : 下载失败${proxy}https://github.com/lmq8267/padavan-KVR/blob/main/trunk/user/trojan/trojan" >>/tmp/ssrplus.log
    				fi
 		
 			done
@@ -566,10 +578,6 @@ ssp_close() {
 	rm -rf /tmp/cdn
 	/usr/bin/ss-rules -f
 	scriptname=$(basename $0)
-	if [ ! -z "$scriptname" ] ; then
-		eval $(ps -w | grep "$scriptname" | grep -v $$ | grep -v grep | awk '{print "kill "$1";";}')
-		eval $(ps -w | grep "$scriptname" | grep -v $$ | grep -v grep | awk '{print "kill -9 "$1";";}')
-	fi
 	kill -9 $(ps | grep ssr-switch | grep -v grep | awk '{print $1}') >/dev/null 2>&1
 	kill -9 $(ps | grep ssr-monitor | grep -v grep | awk '{print $1}') >/dev/null 2>&1
 	kill_process
@@ -583,6 +591,10 @@ ssp_close() {
 	fi
 	clear_iptable
 	/sbin/restart_dhcpd
+ 	if [ ! -z "$scriptname" ] ; then
+		eval $(ps -w | grep "$scriptname" | grep -v $$ | grep -v grep | awk '{print "kill "$1";";}')
+		eval $(ps -w | grep "$scriptname" | grep -v $$ | grep -v grep | awk '{print "kill -9 "$1";";}')
+	fi
 }
 
 
@@ -698,7 +710,7 @@ ressp() {
 
 case $1 in
 start)
-	ssp_start
+	ssp_start &
 	;;
 stop)
 	killall -q -9 ssr-switch
@@ -706,11 +718,11 @@ stop)
 	;;
 restart)
 	ssp_close
-	ssp_start
+	ssp_start &
 	;;
 reserver)
 	ssp_close
-	ressp
+	ressp &
 	;;
 *)
 	echo "check"

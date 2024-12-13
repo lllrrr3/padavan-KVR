@@ -2308,7 +2308,7 @@ static int smartdns_status_hook(int eid, webs_t wp, int argc, char **argv)
 #if defined (APP_CADDY)
 static int caddy_status_hook(int eid, webs_t wp, int argc, char **argv)
 {
-	int caddy_status_code = pids("caddy_filebrowser");
+	int caddy_status_code = pids("caddy_filebrowser") || pids("caddy");
 	websWrite(wp, "function caddy_status() { return %d;}\n", caddy_status_code);
 	return 0;
 }
@@ -3884,6 +3884,13 @@ apply_cgi(const char *url, webs_t wp)
 		unlink("/tmp/alist.log");
 #endif
 		websRedirect(wp, current_url);
+		return 0;
+	}
+	else if (!strcmp(value, " Restartcaddy "))
+	{
+#if defined(APP_CADDY)
+		system("/usr/bin/caddy.sh start &");
+#endif
 		return 0;
 	}
 	else if (!strcmp(value, " Restartlucky "))
